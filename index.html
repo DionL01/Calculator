@@ -186,6 +186,7 @@ multiplier.addEventListener("click", () => selectOperator("x"));
 divider.addEventListener("click", () => selectOperator("/"));
 
 
+
 //operator decides further path
 const operate = function(a, selectedOperator ,b) {
     switch (selectedOperator) {
@@ -262,6 +263,11 @@ divider.addEventListener("click",event=>{ display.textContent += " / "})
 equal.addEventListener("click",calculate)
 clear.addEventListener("click",resetCalculator)
 
+
+
+
+//no rounding up or down, not suited for complex formulas with pemdas, not able to add floating point digits manually
+//no backspace, no keyboard support
 
 </script>
 </body>
