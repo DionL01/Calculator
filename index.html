@@ -4,8 +4,152 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    
+<h1> Calculator</h1>
+
+
+<div id="display"></div>
+
+
+<div class="container">
+    <div class="row">
+        <button id="7">7</button>
+        <button id="8">8</button>
+        <button id="9">9</button>
+        <button id="divider">/</button>
+    </div>
+    <div class="row">
+        <button id="4">4</button>
+        <button id="5">5</button>
+        <button id="6">6</button>
+        <button id="multiplier">x</button>
+    </div>
+    <div class="row">
+        <button id="1">1</button>
+        <button id="2">2</button>
+        <button id="3">3</button>
+        <button id="minus">-</button>
+    </div>
+    <div class="row">
+        <button id="0">0</button>
+        <button id="comma">.</button>
+        <button id="equal">=</button>
+        <button id="plus">+</button>
+    </div>
+   <button id="clear">clear</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+//get button elements
+const one = document.getElementById("1");
+const two = document.getElementById("2");
+const three = document.getElementById("3");
+const four = document.getElementById("4");
+const five = document.getElementById("5");
+const six = document.getElementById("6");
+const seven = document.getElementById("7");
+const eight = document.getElementById("8");
+const nine = document.getElementById("9");
+const zero = document.getElementById("0");
+const comma = document.getElementById("comma");
+const equal = document.getElementById("equal");
+const plus = document.getElementById("plus");
+const minus = document.getElementById("minus");
+const multiplier = document.getElementById("multiplier");
+const divider = document.getElementById("divider");
+const display = document.getElementById("display");
+const clear = document.getElementById("clear");
+
+//math functions
+let a = 0
+let b = 0
+let total = "0"
+
+let operator = "";
+
+
+const sum = function(a, b) {
+    operator = "+";
+    let sumAnswer = a+b;
+    console.log(sumAnswer);
+};
+
+const subtract = function(a, b) {
+    operator = "-";
+    let subtractAnswer = a-b;
+    console.log(subtractAnswer);
+};
+
+const multiply = function(a, b) {
+    operator = "x";
+    let multiplyAnswer = a*b;
+    console.log(multiplyAnswer);
+};
+
+const divide = function(a, b) {
+    operator = "/";
+    let divideAnswer = a/b;
+    console.log(divideAnswer);
+};
+
+
+
+const operate = function(a, b) {
+    switch (operator) {
+        case "+":
+            return sum(a, b);
+        case "-":
+            return subtract(a, b);
+        case "x":
+            return multiply(a, b);
+        case "/":
+            return divide(a, b);
+    }
+}
+
+//math buttons
+plus.addEventListener("click", sum)
+minus.addEventListener("click", subtract)
+multiplier.addEventListener("click", multiply)
+divider.addEventListener("click", divide)
+equal.addEventListener("click", operate)
+
+
+
+
+// screen changer
+one.addEventListener("click",event=>{ display.innerHTML += "1"})
+two.addEventListener("click",event=>{ display.innerHTML += "2"})
+three.addEventListener("click",event=>{ display.innerHTML += "3"})
+four.addEventListener("click",event=>{ display.innerHTML += "4"})
+five.addEventListener("click",event=>{ display.innerHTML += "5"})
+six.addEventListener("click",event=>{ display.innerHTML += "6"})
+seven.addEventListener("click",event=>{ display.innerHTML += "7"})
+eight.addEventListener("click",event=>{ display.innerHTML += "8"})
+nine.addEventListener("click",event=>{ display.innerHTML += "9"})
+zero.addEventListener("click",event=>{ display.innerHTML += "0"})
+comma.addEventListener("click",event=>{ display.innerHTML += "."})
+plus.addEventListener("click",event=>{ display.innerHTML += " + "})
+minus.addEventListener("click",event=>{ display.innerHTML += " - "})
+multiplier.addEventListener("click",event=>{ display.innerHTML += " x "})
+divider.addEventListener("click",event=>{ display.innerHTML += " / "})
+equal.addEventListener("click",event=>{ display.innerHTML = total})
+clear.addEventListener("click",event=>{ display.innerHTML = " "})
+
+
+</script>
 </body>
 </html>
