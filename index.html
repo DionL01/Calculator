@@ -74,41 +74,121 @@ const display = document.getElementById("display");
 const clear = document.getElementById("clear");
 
 //math functions
-let a = 0
-let b = 0
-let total = "0"
+    const sum = function(a, b) {
+        return a+b;
+    };
 
-let operator = "";
+    const subtract = function(a, b) {
+        return a-b;
+    };
 
+    const multiply = function(a, b) {
+        return a*b;
+    };
 
-const sum = function(a, b) {
-    operator = "+";
-    let sumAnswer = a+b;
-    console.log(sumAnswer);
-};
-
-const subtract = function(a, b) {
-    operator = "-";
-    let subtractAnswer = a-b;
-    console.log(subtractAnswer);
-};
-
-const multiply = function(a, b) {
-    operator = "x";
-    let multiplyAnswer = a*b;
-    console.log(multiplyAnswer);
-};
-
-const divide = function(a, b) {
-    operator = "/";
-    let divideAnswer = a/b;
-    console.log(divideAnswer);
-};
+    const divide = function(a, b) {
+            if (b === 0) {
+                return "Stupid.";
+            };
+        return a/b;
+    };
 
 
+//variable declaration
 
-const operate = function(a, b) {
-    switch (operator) {
+let firstNumber = null;
+let operator = null;
+let currentInput = "";
+let waitingForSecondNumber = false;
+let resultDisplayed = false;
+
+
+//assign input
+
+function inputDigit(digit) {
+     if (resultDisplayed) {
+        currentInput = "";
+        firstNumber = null;
+        operator = null;
+        resultDisplayed = false;
+    }
+
+    if (waitingForSecondNumber) {
+        currentInput = "";
+        waitingForSecondNumber = false;
+    }
+
+    currentInput += digit;
+    display.textContent = currentInput;
+}
+
+
+
+one.addEventListener("click", () => inputDigit("1"));
+two.addEventListener("click", () => inputDigit("2"));
+three.addEventListener("click", () => inputDigit("3"));
+four.addEventListener("click", () => inputDigit("4"));
+five.addEventListener("click", () => inputDigit("5"));
+six.addEventListener("click", () => inputDigit("6"));
+seven.addEventListener("click", () => inputDigit("7"));
+eight.addEventListener("click", () => inputDigit("8"));
+nine.addEventListener("click", () => inputDigit("9"));
+zero.addEventListener("click", () => inputDigit("0"));
+
+
+
+
+
+// choose which operation
+function selectOperator(newOperator) {
+     if (currentInput === "") {
+        return;
+    }
+
+    const inputValue = Number(currentInput);
+
+    if (
+        firstNumber !== null &&
+        operator !== null &&
+        !waitingForSecondNumber
+    ) {
+        const result = operate(firstNumber, operator, inputValue);
+
+        if (typeof result !== "number") {
+            display.textContent = result;
+            firstNumber = null;
+            operator = null;
+            currentInput = "";
+            waitingForSecondNumber = true;
+            return;
+        }
+
+        firstNumber = result;
+        currentInput = String(result);
+        display.textContent = result;
+    } else {
+        firstNumber = inputValue;
+    }
+
+    operator = newOperator;
+    waitingForSecondNumber = true;
+    resultDisplayed = false;
+
+}
+
+
+
+
+//math operator buttons
+plus.addEventListener("click", () => selectOperator("+"));
+minus.addEventListener("click", () => selectOperator("-"));
+multiplier.addEventListener("click", () => selectOperator("x"));
+divider.addEventListener("click", () => selectOperator("/"));
+
+
+//operator decides further path
+const operate = function(a, selectedOperator ,b) {
+    switch (selectedOperator) {
         case "+":
             return sum(a, b);
         case "-":
@@ -117,37 +197,70 @@ const operate = function(a, b) {
             return multiply(a, b);
         case "/":
             return divide(a, b);
+        default:
+            return b;
     }
 }
 
-//math buttons
-plus.addEventListener("click", sum)
-minus.addEventListener("click", subtract)
-multiplier.addEventListener("click", multiply)
-divider.addEventListener("click", divide)
-equal.addEventListener("click", operate)
+
+//calculate result
+
+function calculate() {
+    if (
+        firstNumber === null ||
+        operator === null ||
+        currentInput === "" ||
+        waitingForSecondNumber
+    ) {
+        return;
+    }
+
+    const secondNumber = Number(currentInput);
+    const result = operate(
+        firstNumber,
+        operator,
+        secondNumber
+    );
+
+    display.textContent = result;
+    resultDisplayed = true;
+
+    if (typeof result === "number") {
+        currentInput = String(result);
+        firstNumber = result;
+    } else {
+        currentInput = "";
+        firstNumber = null;
+    }
+
+    operator = null;
+    waitingForSecondNumber = true;
+}
+
+
+
+//reset calc
+function resetCalculator() {
+    firstNumber = null;
+    operator = null;
+    currentInput = "";
+    waitingForSecondNumber = false;
+    display.textContent = "";
+    resultDisplayed = false;
+}
+
 
 
 
 
 // screen changer
-one.addEventListener("click",event=>{ display.innerHTML += "1"})
-two.addEventListener("click",event=>{ display.innerHTML += "2"})
-three.addEventListener("click",event=>{ display.innerHTML += "3"})
-four.addEventListener("click",event=>{ display.innerHTML += "4"})
-five.addEventListener("click",event=>{ display.innerHTML += "5"})
-six.addEventListener("click",event=>{ display.innerHTML += "6"})
-seven.addEventListener("click",event=>{ display.innerHTML += "7"})
-eight.addEventListener("click",event=>{ display.innerHTML += "8"})
-nine.addEventListener("click",event=>{ display.innerHTML += "9"})
-zero.addEventListener("click",event=>{ display.innerHTML += "0"})
-comma.addEventListener("click",event=>{ display.innerHTML += "."})
-plus.addEventListener("click",event=>{ display.innerHTML += " + "})
-minus.addEventListener("click",event=>{ display.innerHTML += " - "})
-multiplier.addEventListener("click",event=>{ display.innerHTML += " x "})
-divider.addEventListener("click",event=>{ display.innerHTML += " / "})
-equal.addEventListener("click",event=>{ display.innerHTML = total})
-clear.addEventListener("click",event=>{ display.innerHTML = " "})
+comma.addEventListener("click",event=>{ display.textContent += "."})
+plus.addEventListener("click",event=>{ display.textContent += " + "})
+minus.addEventListener("click",event=>{ display.textContent += " - "})
+multiplier.addEventListener("click",event=>{ display.textContent += " x "})
+divider.addEventListener("click",event=>{ display.textContent += " / "})
+equal.addEventListener("click",calculate)
+clear.addEventListener("click",resetCalculator)
 
 
 </script>
